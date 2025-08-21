@@ -10,7 +10,8 @@ def get_ip():
     """
     # Check for X-Forwarded-For header first (proxy)
     if request.headers.getlist("X-Forwarded-For"):
-        ip = request.headers.getlist("X-Forwarded-For")[0]
+        # Take the first IP only (actual client IP)
+        ip = request.headers.getlist("X-Forwarded-For")[0].split(",")[0].strip()
     else:
         ip = request.remote_addr  # fallback
 
